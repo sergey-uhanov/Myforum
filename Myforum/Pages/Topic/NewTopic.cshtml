@@ -1,0 +1,63 @@
+﻿@page
+@model Myforum.Pages.Topic.NewTopicModel
+@using Microsoft.AspNetCore.Identity;
+@using Myforum.Areas.Identity.Data
+@inject SignInManager<RazorUsers> SignInManager
+@inject UserManager<RazorUsers> UserManager
+@{
+    ViewData["Title"] = "Новое обсуждение";
+}
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <h1>Новое обсуждение</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Topic.Title" class="control-label">Заголовок</label>
+                    <input asp-for="Topic.Title" class="form-control" />
+                    <span asp-validation-for="Topic.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Topic.Description" class="control-label">Тема</label>                    
+                    <select asp-for="Topic.Description" class="form-control">
+                        @foreach (var type in Model.TypeList)
+                        {
+                            <option value=@type>@type</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Topic.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Topic.Text" class="control-label">Текст</label>
+                    <input asp-for="Topic.Text" class="form-control" />
+                    <span asp-validation-for="Topic.Text" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="Topic.RazorUsersId" value="@UserManager.GetUserId(User)" />
+
+                <div class="form-group">
+                    <input type="submit" value="Создать" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="Index">Back to List</a>
+    </div>
+}
+else
+{
+
+    <h1>Вы должны быть зарегестрированы</h1>
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

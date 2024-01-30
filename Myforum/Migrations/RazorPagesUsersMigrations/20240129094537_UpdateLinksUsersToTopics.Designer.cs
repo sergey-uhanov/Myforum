@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Myforum.Migrations
+namespace Myforum.Migrations.RazorPagesUsersMigrations
 {
     [DbContext(typeof(RazorPagesUsers))]
-    [Migration("20240124154613_UpdateUser")]
-    partial class UpdateUser
+    [Migration("20240129094537_UpdateLinksUsersToTopics")]
+    partial class UpdateLinksUsersToTopics
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

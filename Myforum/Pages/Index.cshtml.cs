@@ -1,20 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Myforum.Data;
+using Myforum.Model;
+using Myforum.Services;
 
-namespace Myforum.Pages
+namespace Myforum
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ListDescriptionType _listDescriptionType;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public List<string> TypeList { get; set; }
+
+        public IndexModel(ListDescriptionType listDescriptionType)
         {
-            _logger = logger;
+            _listDescriptionType = listDescriptionType;
+            TypeList = _listDescriptionType.listType;
         }
 
-        public void OnGet()
-        {
 
-        }
+
     }
 }

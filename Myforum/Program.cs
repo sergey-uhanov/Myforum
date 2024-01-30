@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Myforum.Areas.Identity.Data;
+using Myforum.Data;
+using Myforum.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("RazorPagesUsersConnection");
@@ -8,11 +10,17 @@ var connectionString = builder.Configuration.GetConnectionString("RazorPagesUser
 
 builder.Services.AddDbContext<RazorPagesUsers>(options =>
     options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddDefaultIdentity<RazorUsers>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<RazorPagesUsers>();
 
+builder.Services.AddSingleton<ListDescriptionType>();
+
 builder.Services.AddScoped<UserManager<RazorUsers>, UserManager<RazorUsers>>();
+builder.Services.AddScoped<TopicService>();
+
 
 
 // Добавление сервисов для аутентификации и авторизации
